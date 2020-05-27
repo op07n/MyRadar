@@ -44,18 +44,22 @@ int parse_line(char *entity, tower_list_t **towers, aircraft_list_t **aircrafts)
 int parse_file(char *path, tower_list_t **towers, aircraft_list_t **aircrafts)
 {
     FILE* fp;
-    char *entity = NULL;
+    //                       char *entity = NULL;
+    char entity[80];
     size_t size_line = 0;
     int line = 0, status = 0;
 
     fp = fopen(path, "r");
     if (!is_valid_fp(fp, path))
         return (RETURN_BAD);
-    while ((line = getline(&entity, &size_line, fp)) != -1) {
-        if (entity[line - 1] == '\n')
-            entity[line - 1] = '\0';
+   //                    while ((line = getline(&entity, &size_line, fp)) != -1) {
+        
+    while( fgets (entity, 80, fp)!=NULL ) {
+        
+  //      if (entity[line - 1] == '\n')
+   //         entity[line - 1] = '\0';
         status = parse_line(entity, towers, aircrafts);
-        entity = NULL;
+   //     entity = NULL;
         if (!status)
             return (RETURN_BAD);
     }
